@@ -38,6 +38,7 @@ class RangeDaysPicker extends StatefulWidget {
     this.centerLeadingDate = false,
     this.previousPageSemanticLabel = 'Previous Day',
     this.nextPageSemanticLabel = 'Next Day',
+    this.allowSingleDate = false
   }) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
 
@@ -211,6 +212,9 @@ class RangeDaysPicker extends StatefulWidget {
 
   /// Semantic label for button to go to the next page
   final String? nextPageSemanticLabel;
+
+  ///Option to allow single selection
+  final bool allowSingleDate;
 
   @override
   State<RangeDaysPicker> createState() => __RangeDaysPickerState();
@@ -471,6 +475,7 @@ class __RangeDaysPickerState extends State<RangeDaysPicker> {
                     splashRadius: widget.splashRadius,
                     onEndDateChanged: (value) => widget.onEndDateChanged?.call(value),
                     onStartDateChanged: (value) => widget.onStartDateChanged?.call(value),
+                    allowSingleDate: widget.allowSingleDate,
                   );
                 },
               ),

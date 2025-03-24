@@ -282,7 +282,10 @@ class _RangeDatePickerState extends State<SingleOrRangeDatePicker> {
 
     if (widget.selectedRange != null) {
       _selectedStartDate = DateUtils.dateOnly(widget.selectedRange!.start);
-      _selectedEndDate = DateUtils.dateOnly(widget.selectedRange!.end);
+      if(widget.selectedRange!.end.compareTo(widget.selectedRange!.start) != 0){
+        _selectedEndDate = DateUtils.dateOnly(widget.selectedRange!.end);
+      }
+
     }
 
     super.initState();
@@ -321,6 +324,7 @@ class _RangeDatePickerState extends State<SingleOrRangeDatePicker> {
         return Padding(
           padding: widget.padding,
           child: RangeDaysPicker(
+            allowSingleDate: true,
             centerLeadingDate: widget.centerLeadingDate,
             currentDate:
             DateUtils.dateOnly(widget.currentDate ?? DateTime.now()),
@@ -379,7 +383,15 @@ class _RangeDatePickerState extends State<SingleOrRangeDatePicker> {
               });
 
               widget.onStartDateChanged?.call(date);
+
+              widget.onRangeSelected?.call(
+                DateTimeRange(
+                  start: _selectedStartDate!,
+                  end: _selectedEndDate ?? _selectedStartDate!,
+                ),
+              );
             },
+
           ),
         );
       case PickerType.months:

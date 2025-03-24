@@ -39,6 +39,7 @@ class RangeDaysView extends StatelessWidget {
     required this.highlightColor,
     required this.splashColor,
     required this.splashRadius,
+    this.allowSingleDate = false
   }) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
 
@@ -156,6 +157,9 @@ class RangeDaysView extends StatelessWidget {
 
   /// The radius of the ink splash.
   final double? splashRadius;
+
+  ///Option to allow single selection
+  final bool allowSingleDate;
 
   /// Builds widgets showing abbreviated days of week. The first widget in the
   /// returned list corresponds to the first day of week for the current locale.
@@ -356,7 +360,10 @@ class RangeDaysView extends StatelessWidget {
 
               if (dayToBuild.isBefore(selectedStartDate!)) {
                 onStartDateChanged(dayToBuild);
-                onEndDateChanged(selectedStartDate!);
+                if(!allowSingleDate){
+                  onEndDateChanged(selectedStartDate!);
+                }
+
                 return;
               }
 
